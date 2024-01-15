@@ -1,0 +1,4 @@
+rootProject.name = 'planner-micro'
+
+includeBuild 'planner-config'
+includeBuild 'planner-server'

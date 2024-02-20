@@ -1,42 +1,40 @@
 package dev.crevan.planner.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "role_data", schema = "todolist", catalog = "postgres")
+@Table(name = "priority", schema = "todolist", catalog = "postgres")
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-public class Role {
+public class Priority implements Serializable {
 
-    @Id
+    // указываем, что поле заполняется в БД
+    // нужно, когда добавляем новый объект и он возвращается уже с новым id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
-    private String name; // название роли
+    private String title;
+    private String color;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return id.equals(role.id);
+        Priority priority = (Priority) o;
+        return id.equals(priority.id);
     }
 
     @Override
@@ -46,6 +44,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return name;
+        return title;
     }
 }

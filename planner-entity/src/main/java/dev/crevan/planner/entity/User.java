@@ -14,17 +14,17 @@ import java.util.Set;
 @Table(name = "user_data", schema = "todolist", catalog = "postgres")
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-
     private String email;
+
+    private String username;
 
     @Column(name = "userpassword")
     private String password;
@@ -32,6 +32,7 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(mappedBy = "users")
     private Set<Role> roles;
+
 
     @Override
     public boolean equals(Object o) {
